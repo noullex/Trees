@@ -23,8 +23,8 @@ public class Main {
 
         System.out.print("I. TEST MIN/MAX\n");
         System.out.print("Min and max value in binary tree: " + bt.findMin() + ", " + bt.findMax() + "\n");
-        System.out.print("Max and max value in binary search tree: " + bst.findMin() + ", " + bst.findMax() + "\n");
-        System.out.print("Max and max value in AVL tree: " + avlt.findMin() + ", " + avlt.findMax() + "\n");
+        System.out.print("Min and max value in binary search tree: " + bst.findMin() + ", " + bst.findMax() + "\n");
+        System.out.print("Min and max value in AVL tree: " + avlt.findMin() + ", " + avlt.findMax() + "\n");
         System.out.print("I. TEST REMOVING\n");
         System.out.print("Find removed value in binary tree: " + bt.find(RM_VALUE) + "\n");
         System.out.print("Find removed value in binary search tree: " + bst.find(RM_VALUE) + "\n");

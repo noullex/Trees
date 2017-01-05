@@ -2,6 +2,11 @@ package com.company.trees;
 
 import com.company.Node;
 
+enum FINDTYPE {
+    MINIMUM,
+    MAXIMUM
+}
+
 public class BinaryTree<T extends Comparable> {
 
     private Node<T> root;
@@ -32,20 +37,19 @@ public class BinaryTree<T extends Comparable> {
 
     private boolean find(Node<T> currentNode, T value, boolean fromLeft, boolean fromParent) {
         if (!value.equals(currentNode.data)) {
-            if (fromParent&& currentNode.right== null) {
+            if (fromParent && currentNode.right == null) {
                 return false;
             }
             if (currentNode.left != null && !fromLeft) {
-                find(currentNode.left, value, true, false);
+                return find(currentNode.left, value, true, false);
             } else if (currentNode.right != null) {
-                find(currentNode.right, value, false, false);
+                return find(currentNode.right, value, false, false);
             } else {
-                find(currentNode.parent, value, true, true);
+                return find(currentNode.parent, value, true, true);
             }
         } else {
             return true;
         }
-        return false;
     }
 
     public void remove(T value) throws Exception {
@@ -83,37 +87,39 @@ public class BinaryTree<T extends Comparable> {
         return findMin(root, root.data, false);
     }
 
+    private T minVal;
+
     private T findMin(Node<T> currentNode, T minValue, boolean fromLeft) {
-        minValue = minValue.compareTo(currentNode.data) > 0 ? currentNode.data : minValue;
-        if (fromLeft && currentNode.right == null) {
-            return minValue;
-        }
-        if (currentNode.left != null && !fromLeft) {
-            findMin(currentNode.left, minValue, true);
-        } else if (currentNode.right != null) {
-            findMin(currentNode.right, minValue, false);
-        } else {
-            findMin(currentNode.parent, minValue, true);
-        }
-        return minValue;
+        minVal = minValue;
+        preOrderTravers(currentNode,FINDTYPE.MINIMUM);
+        return minVal;
     }
 
     public T findMax() {
         return findMax(root, root.data, false);
     }
 
+    private T maxVal;
+
     private T findMax(Node<T> currentNode, T maxValue, boolean fromLeft) {
-        maxValue = maxValue.compareTo(currentNode.data) < 0 ? currentNode.data : maxValue;
-        if (fromLeft && currentNode.right == null) {
-            return maxValue;
+        maxVal = maxValue;
+        preOrderTravers(currentNode,FINDTYPE.MAXIMUM);
+        return maxVal;
+    }
+
+    void preOrderTravers(Node<T> root,FINDTYPE type) {
+        if (root != null) {
+            if(type==FINDTYPE.MAXIMUM) {
+                if (root.data.compareTo(maxVal) > 0) {
+                    maxVal = root.data;
+                }
+            } else if (type == FINDTYPE.MINIMUM){
+                 if (root.data.compareTo(minVal) < 0) {
+                    minVal = root.data;
+                }
+            }
+            preOrderTravers(root.left,type);
+            preOrderTravers(root.right,type);
         }
-        if (currentNode.left != null && !fromLeft) {
-            findMax(currentNode.left, maxValue, true);
-        } else if (currentNode.right != null) {
-            findMax(currentNode.right, maxValue, false);
-        } else {
-            findMax(currentNode.parent, maxValue, true);
-        }
-        return maxValue;
     }
 }
