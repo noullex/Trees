@@ -2,6 +2,8 @@ package com.company.trees;
 
 import com.company.Node;
 
+import java.util.ArrayList;
+
 public class BinarySearchTree<T extends Comparable> {
 
     private Node<T> root;
@@ -95,5 +97,20 @@ public class BinarySearchTree<T extends Comparable> {
             }
         }
         return currentNode;
+    }
+
+    private ArrayList<T> treeArray = new ArrayList<>();
+
+    public ArrayList<T> toArray(){
+        return toArray(root);
+    }
+
+    private ArrayList<T> toArray(Node<T> currentNode) {
+        if (currentNode != null) {
+            toArray(currentNode.left);
+            toArray(currentNode.right);
+            treeArray.add(currentNode.data);
+        }
+        return treeArray;
     }
 }

@@ -2,6 +2,8 @@ package com.company.trees;
 
 import com.company.Node;
 
+import java.util.ArrayList;
+
 enum FINDTYPE {
     MINIMUM,
     MAXIMUM
@@ -107,7 +109,7 @@ public class BinaryTree<T extends Comparable> {
         return maxVal;
     }
 
-    void preOrderTravers(Node<T> root,FINDTYPE type) {
+    private void preOrderTravers(Node<T> root,FINDTYPE type) {
         if (root != null) {
             if(type==FINDTYPE.MAXIMUM) {
                 if (root.data.compareTo(maxVal) > 0) {
@@ -121,5 +123,19 @@ public class BinaryTree<T extends Comparable> {
             preOrderTravers(root.left,type);
             preOrderTravers(root.right,type);
         }
+    }
+
+    public ArrayList<T> toArray(){
+        return toArray(root);
+    }
+
+    private ArrayList<T> treeArray = new ArrayList<>();
+    private ArrayList<T> toArray(Node<T> currentNode) {
+        if (currentNode != null) {
+            toArray(currentNode.left);
+            toArray(currentNode.right);
+            treeArray.add(currentNode.data);
+        }
+        return treeArray;
     }
 }

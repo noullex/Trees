@@ -3,6 +3,8 @@ package com.company.trees;
 import com.company.Node;
 import com.sun.corba.se.impl.corba.TCUtility;
 
+import java.util.ArrayList;
+
 public class AvlTree<T extends Comparable> {
 
     private Node<T> root;
@@ -132,6 +134,20 @@ public class AvlTree<T extends Comparable> {
         return currentNode;
     }
 
+    private ArrayList<T> treeArray = new ArrayList<>();
+
+    public ArrayList<T> toArray() {
+        return toArray(root);
+    }
+
+    private ArrayList<T> toArray(Node<T> currentNode) {
+        if (currentNode != null) {
+            toArray(currentNode.left);
+            toArray(currentNode.right);
+            treeArray.add(currentNode.data);
+        }
+        return treeArray;
+    }
 
     private int height(Node<T> node) {
         return node == null ? -1 : node.height;
